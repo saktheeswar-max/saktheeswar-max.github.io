@@ -1,0 +1,134 @@
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Middleware to parse JSON request bodies
+// This is crucial for handling POST and PUT requests that send JSON data.
+app.use(express.json());
+
+// In-memory "database" for books
+// This array will store our book objects.
+let books = [
+    { id: 1, title: 'The Lord of the Rings', author: 'J.R.R. Tolkien' },
+    { id: 2, title: 'Pride and Prejudice', author: 'Jane Austen' }
+];
+// This variable ensures that new books get a unique ID.
+let nextBookId = 3;
+
+// Basic route for testing the server's health.
+// When you visit http://localhost:3000, you'll see this message.
+app.get('/', (req, res) => {
+    res.send('Welcome to the Book API!');
+});
+
+// --- API Endpoints for Managing Books ---
+
+// 1. GET all books
+// Route: GET /books
+// Purpose: Retrieves and returns a JSON array of all books currently in memory.
+app.get('/books', (req, res) => {
+    res.json(books); // Sends the 'books' array as a JSON response.
+});
+
+// 2. GET a single book by ID
+// Route: GET /books/:id
+// Purpose: Retrieves and returns a single book identified by its ID.
+// Returns: The book object if found, or 404 Not Found if not.
+app.get('/books/:id', (req, res) => {
+    const id = parseInt(req.params.id); // Get ID from URL parameter and convert to integer
+    const book = books.find(b => b.id === id); // Find the book with matching ID
+
+    if (!book) {
+        return res.status(404).json({ message: 'Book not found' });
+    }
+    res.json(book); // Send the found book as JSON
+});
+
+
+// 3. POST a new book
+// Route: POST /books
+// Purpose: Adds a new book to the list.
+// Expects: A JSON request body with 'title' and 'author'.
+// Returns: The newly created book object with a 201 Created status.
+app.post('/books', (req, res) => {
+    // Destructure 'title' and 'author' from the request body.
+    const { title, author } = req.body;
+
+    // Basic validation: Check if title and author are provided.
+    if (!title || !author) {
+        // If not, send a 400 Bad Request status with an informative message.
+        return res.status(400).json({ message: 'Title and author are required' });
+    }
+
+    // Create a new book object with a unique ID (then increment nextBookId).
+    const newBook = {
+        id: nextBookId++,
+        title,
+        author
+    };
+
+    // Add the new book to our in-memory array.
+    books.push(newBook);
+
+    // Send back the newly created book object with a 201 (Created) status code.
+    res.status(201).json(newBook);
+});
+
+// 4. PUT (Update) a book by ID
+// Route: PUT /books/:id
+// Purpose: Modifies an existing book identified by its ID.
+// Expects: JSON request body with 'title' and/or 'author' for updates.
+// Returns: The updated book object.
+app.put('/books/:id', (req, res) => {
+    // Get the book ID from the URL parameters and convert it to an integer.
+    const id = parseInt(req.params.id);
+    // Get the updated title and author from the request body.
+    const { title, author } = req.body;
+
+    // Find the index of the book in the array that matches the given ID.
+    const bookIndex = books.findIndex(book => book.id === id);
+
+    // If the book is not found (index is -1), send a 404 Not Found error.
+    if (bookIndex === -1) {
+        return res.status(404).json({ message: 'Book not found' });
+    }
+
+    // Update the book's properties if the corresponding values are provided in the request body.
+    if (title) {
+        books[bookIndex].title = title;
+    }
+    if (author) {
+        books[bookIndex].author = author;
+    }
+
+    // Send back the updated book object.
+    res.json(books[bookIndex]);
+});
+
+// 5. DELETE a book by ID
+// Route: DELETE /books/:id
+// Purpose: Removes a book from the list based on its ID.
+// Returns: 204 No Content on successful deletion, 404 Not Found if the book doesn't exist.
+app.delete('/books/:id', (req, res) => {
+    // Get the book ID from the URL parameters and convert it to an integer.
+    const id = parseInt(req.params.id);
+
+    // Store the initial length of the books array to check if a book was actually removed.
+    const initialLength = books.length;
+
+    // Filter out (effectively delete) the book with the matching ID from the array.
+    books = books.filter(book => book.id !== id);
+
+    // If the array length hasn't changed, it means no book was found with that ID.
+    if (books.length === initialLength) {
+        return res.status(404).json({ message: 'Book not found' });
+    }
+
+    // Send a 204 No Content status, indicating successful deletion with no response body.
+    res.status(204).send();
+});
+
+// Start the server and make it listen for incoming requests on the specified port.
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
