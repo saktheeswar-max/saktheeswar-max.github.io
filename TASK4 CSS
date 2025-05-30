@@ -1,0 +1,276 @@
+/* GLOBAL STYLES (Applies to all screen sizes by default) */
+
+/* Ensures padding and border are included in the element's total width and height */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* Basic body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8; /* Light background for contrast */
+}
+
+/* Essential for responsive images */
+img {
+    max-width: 100%; /* Ensures image won't overflow its parent */
+    height: auto;    /* Maintains original aspect ratio */
+    display: block;  /* Helps remove extra space below images, good practice */
+}
+
+/* Main container for desktop layout - this is fixed width */
+.container {
+    width: 960px; /* FIXED WIDTH - This will be overridden for mobile */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+}
+
+/* HEADER STYLES (Desktop-first) */
+.main-header {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allows items to wrap if screen is too narrow (just in case) */
+}
+
+.main-header .container { /* Inner container for header content */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 960px; /* Match outer container width */
+    margin: 0 auto;
+    padding: 0 20px; /* Padding for content within the header container */
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.main-nav .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Horizontal navigation on desktop */
+}
+
+.main-nav .nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.main-nav .nav-links li a:hover {
+    background-color: #555;
+}
+
+/* Hamburger menu is hidden by default on desktop */
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* MAIN CONTENT SECTIONS (Desktop-first) */
+.hero-section {
+    background-color: #e0f7fa; /* Light blue background */
+    padding: 50px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.hero-section h1 {
+    font-size: 3em; /* Large heading for desktop */
+    margin-bottom: 10px;
+    color: #00796b;
+}
+
+.hero-section p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.features-section {
+    display: flex; /* Creates columns on desktop */
+    justify-content: space-around;
+    gap: 20px; /* Space between columns */
+    margin-bottom: 30px;
+}
+
+.feature-col {
+    flex: 1; /* Each column takes equal space */
+    min-width: 280px; /* Prevents columns from getting too small on desktop */
+    background-color: #fdfdfd;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.feature-col h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #00796b;
+}
+
+.feature-col img {
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.about-section {
+    padding: 30px 0;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.about-section h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #00796b;
+}
+
+/* FOOTER STYLES */
+.main-footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.main-footer .container {
+    padding: 0 20px; /* Ensure footer text is not right at edges */
+}
+
+/* --- MEDIA QUERIES FOR MOBILE/TABLET SCREENS --- */
+/* Styles inside this block apply when the screen width is 768px or less */
+@media (max-width: 768px) {
+
+    /* Adjust main container to be full width on smaller screens */
+    .container {
+        width: 100%; /* Make it fluid */
+        padding: 15px; /* Adjust padding for mobile */
+    }
+
+    /* HEADER / NAVIGATION ADJUSTMENTS */
+    .main-header .container {
+        flex-direction: column; /* Stack header items vertically */
+        align-items: flex-start; /* Align logo to the left */
+        width: 100%; /* Ensure inner container is also full width */
+        padding: 0 15px; /* Adjust padding */
+    }
+
+    .hamburger-menu {
+        display: block; /* Show hamburger icon on mobile */
+        align-self: flex-end; /* Push it to the right within the column layout */
+        order: -1; /* Place it before other items in the flex container */
+    }
+
+    .main-nav {
+        width: 100%; /* Ensure nav takes full width for vertical stacking */
+        text-align: center;
+    }
+
+    .main-nav .nav-links {
+        flex-direction: column; /* Stack navigation links vertically */
+        width: 100%;
+        display: none; /* Hide the menu by default on mobile */
+        transition: all 0.3s ease-in-out; /* Smooth transition for showing/hiding */
+    }
+
+    .main-nav .nav-links.active { /* This class is toggled by JavaScript */
+        display: flex; /* Show the menu when active */
+    }
+
+    .main-nav .nav-links li {
+        width: 100%; /* Ensure each link takes full width */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+    }
+
+    .main-nav .nav-links li:last-child {
+        border-bottom: none; /* No border on the last item */
+    }
+
+    .main-nav .nav-links li a {
+        padding: 15px; /* More padding for easier tapping */
+    }
+
+    /* MAIN CONTENT ADJUSTMENTS */
+    .hero-section {
+        padding: 30px 15px; /* Reduce padding for smaller screens */
+    }
+
+    .hero-section h1 {
+        font-size: 2em; /* Smaller heading for mobile */
+    }
+
+    .hero-section p {
+        font-size: 1.1em;
+    }
+
+    .features-section {
+        flex-direction: column; /* Stack feature columns vertically */
+        align-items: center; /* Center them if you want */
+        gap: 15px; /* Adjust gap for vertical spacing */
+    }
+
+    .feature-col {
+        width: 90%; /* Make columns take up most of the mobile width */
+        max-width: 400px; /* Prevent them from getting too wide on tablets */
+        margin: 0 auto; /* Center the columns */
+    }
+
+    .about-section {
+        padding: 20px 0; /* Adjust padding */
+    }
+
+    .about-section h2 {
+        font-size: 2em; /* Smaller heading */
+    }
+
+    .about-section p {
+        padding: 0 15px; /* Add some horizontal padding to paragraphs */
+    }
+}
+
+/* Optional: Even smaller screen adjustments (e.g., for very small phones) */
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 1.8em;
+    }
+
+    .feature-col h2 {
+        font-size: 1.6em;
+    }
+
+    .about-section h2 {
+        font-size: 1.8em;
+    }
+
+    /* You might reduce overall padding or margins even further here if needed */
+    .container {
+        padding: 10px;
+    }
+}
