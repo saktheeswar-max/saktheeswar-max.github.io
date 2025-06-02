@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task1- Responsive Landing Page</title>
+    <link rel="stylesheet" href="style1.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> </head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">Elevate Labs</div> <nav class="main-nav">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                &#9776; </button>
+        </div>
+    </header>
+
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <h2>Your Perfect Solution Awaits</h2> <p>Discover our amazing features and services designed to elevate your business.</p> <a href="#contact" class="btn call-to-action">Get Started Today!</a> </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <h3>Key Features</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-rocket"></i>
+                    <h4>Fast Performance</h4>
+                    <p>Experience blazing fast loading times for your applications.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Fully Responsive</h4>
+                    <p>Works seamlessly across all devices, from desktop to mobile.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lock"></i>
+                    <h4>Secure & Reliable</h4>
+                    <p>Your data is safe with our robust security measures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Elevate Labs. All rights reserved.</p>
+            <div class="social-links"> <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for mobile nav toggle (optional, but makes media query more effective)
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.main-nav ul').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
